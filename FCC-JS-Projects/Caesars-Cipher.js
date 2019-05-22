@@ -17,19 +17,25 @@ function rot13(str) { // LBH QVQ VG!
         let code = 0;
         let decoded_str = '';
         for (let i = 0; i < element.length; i++) {
-            code = element.charCodeAt(i) - 13;
-            decoded_str += String.fromCharCode(code);
+
+            code = element.charCodeAt(i);
+            if (code < 65 || code > 90) {
+                decoded_str += String.fromCharCode(code);
+            } else if (code < 78) {
+                decoded_str += String.fromCharCode(code + 13);
+            } else {
+                decoded_str += String.fromCharCode(code - 13);
+            }
         }
         decoded_arr.push(decoded_str);
     });
 
-    console.log("encoded_arr: ", encoded_arr);
-    console.log("solution: ", decoded_arr);
-    return str;
+    console.log("solution: ", decoded_arr.join(" "));
+    return decoded_arr.join(" ");
 }
 
 //test casess
 rot13("SERR PBQR PNZC") //should decode to FREE CODE CAMP
-// rot13("SERR CVMMN!") //should decode to FREE PIZZA!
-// rot13("SERR YBIR?") //should decode to FREE LOVE?
-// rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT.") //should decode to THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.
+rot13("SERR CVMMN!") //should decode to FREE PIZZA!
+rot13("SERR YBIR?") //should decode to FREE LOVE?
+rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT.") //should decode to THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.
