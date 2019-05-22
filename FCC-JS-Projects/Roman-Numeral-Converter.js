@@ -60,55 +60,36 @@ convertToRoman1(36);
 // solution 2: this is works with all test cases 
 const ROMANS = [
     [1000, 'M'],
+    [900, 'CM'],
     [500, 'D'],
+    [400, 'CD'],
     [100, 'C'],
+    [90, 'XC'],
     [50, 'L'],
+    [40, 'XL'],
     [10, 'X'],
+    [9, 'IX'],
     [5, 'V'],
+    [4, 'IV'],
     [1, 'I']
 ];
 
 function convertToRoman(num) {
+    let roman = "";
 
-    let num_arr = num.toString().split('');
-    let solutin = [];
-
-    // To Break the number into Thousands, Hundreds, Tens and Ones
-    let num_parts = num_arr.map((i, index) => {
-        if (parseInt(i) > 1) {
-            let x = index + 1;
-            for (x; x < num_arr.length; x++) {
-                i += "0";
-            }
-            return i;
+    for (let i = 0; i < ROMANS.length; i++) {
+        while (num >= ROMANS[i][0]) {
+            roman += ROMANS[i][1];
+            num -= ROMANS[i][0];
         }
-    })
-    console.log(num_parts);
+    }
+    console.log("roman: ", roman);
+    return roman;
 
-    num_parts.forEach((i) => {
-
-        let NumIndexVal = parseInt(i);
-        let roman_num = "";
-
-        ROMANS.forEach((i) => {
-            while (NumIndexVal >= i[0]) {
-                NumIndexVal -= i[0];
-                roman_num += i[1];
-            }
-
-        });
-
-        if (roman_num) {
-            solutin.push(roman_num);
-        }
-
-
-    })
-
-
-
-    return solutin.join("");
 }
 
 convertToRoman(400);
+convertToRoman(6);
+convertToRoman(3444);
+
 
