@@ -30,26 +30,34 @@ function PaginationHelper(collection, itemsPerPage) {
 
 // returns the number of items within the entire collection
 PaginationHelper.prototype.itemCount = function () {
-    return collection.length;
+    return this.collection.length;
 }
 
 // returns the number of pages
 PaginationHelper.prototype.pageCount = function () {
-    let num_of_pages = 0;
-    while () {
-    }
-
-    return
+    let num_of_pages = this.itemCount() / this.itemsPerPage;
+    // to round the num_of_pages upward to its nearest integer
+    return Math.ceil(num_of_pages);
 }
 
 // returns the number of items on the current page. page_index is zero based.
 // this method should return -1 for pageIndex values that are out of range
 PaginationHelper.prototype.pageItemCount = function (pageIndex) {
-
+    if (pageIndex < 0 || pageIndex >= this.pageCount()) {
+        return -1
+    } else {
+        return this.collection.slice(pageIndex * this.itemsPerPage, this.itemCount()).splice(0, this.itemsPerPage).length;
+    }
 }
 
 // determines what page an item is on. Zero based indexes
 // this method should return -1 for itemIndex values that are out of range
 PaginationHelper.prototype.pageIndex = function (itemIndex) {
-
+    if (this.itemCount() === 0 || itemIndex < 0 || itemIndex > this.itemCount()) {
+        return -1;
+    }
+    if (itemIndex === 0 || itemIndex / this.itemsPerPage === 1) {
+        return 0;
+    }
+    return Math.floor((itemIndex / this.itemsPerPage));
 }
